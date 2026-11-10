@@ -12,6 +12,11 @@ it. Open Tools > AS SMTP2GO Monitor and save a Microsoft Teams Workflow webhook
 URL. The plugin needs WordPress 7.0, PHP 7.4 or newer, and a MySQL-compatible
 database with advisory lock support.
 
+On multisite, the plugin may be network activated. Each subsite has its own
+queue, circuit state, webhook URL, and recovery screen under that site's Tools
+menu. The queue table is created when that subsite first loads the plugin. Save
+the webhook URL on each subsite that needs alerts.
+
 ## Operation
 
 1. Armed: WordPress mail uses the official SMTP2GO plugin. An SMTP2GO mailer

@@ -1,7 +1,7 @@
 === AS SMTP2GO Monitor ===
 Tags: smtp2go, email, queue, monitoring
 Requires at least: 7.0
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,9 @@ https://www.microsoft.com/servicesagreement/ and
 https://privacy.microsoft.com/privacystatement.
 
 == Changelog ==
+
+= 0.1.1 =
+* Initialise a separate queue and state on each multisite subsite before handling its mail.
 
 = 0.1.0 =
 * Initial release.

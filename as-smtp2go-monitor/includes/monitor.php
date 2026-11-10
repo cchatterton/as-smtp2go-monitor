@@ -57,6 +57,8 @@ final class AS_SMTP2GO_Monitor {
 	}
 
 	public static function remember_mail( $mail ) {
+		// A caller may have switched blogs after this plugin was first loaded.
+		AS_SMTP2GO_Queue::ensure_installed();
 		if ( ! self::$replaying && ! self::test_request() ) {
 			self::$last_mail = $mail;
 		}

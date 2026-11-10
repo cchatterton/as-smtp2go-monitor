@@ -23,6 +23,12 @@ interrupted worker requires manual review because its delivery outcome is
 uncertain. The circuit state is held in a WordPress option and changed using a
 conditional SQL update.
 
+On multisite, the table and options are site scoped. Network activation runs
+the plugin in each subsite, so a schema version check creates that site's queue
+before hooks run. The `wp_mail` filter repeats the check because code may call
+`switch_to_blog()` later in the same request. Neither activation nor an update
+resets an existing site's circuit state or queued mail.
+
 WordPress Cron schedules one batch of at most 10 messages per minute. Cron
 depends on site traffic or a server scheduler. The queue remains intact if cron
 does not run. The administrator must initiate recovery; the plugin never does so

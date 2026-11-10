@@ -6,9 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class AS_SMTP2GO_Queue {
+	const SCHEMA_VERSION = '1';
+
 	public static function table() {
 		global $wpdb;
 		return $wpdb->prefix . 'as_smtp2go_queue';
+	}
+
+	/** Install on first load of each site, including network-activated subsites. */
+	public static function ensure_installed() {
+		if ( self::SCHEMA_VERSION === get_option( 'as_smtp2go_monitor_schema_version' ) ) {
+			return true;
+		}
+		return self::install();
 	}
 
 	public static function install() {
@@ -27,7 +37,14 @@ final class AS_SMTP2GO_Queue {
 			KEY status_id (status,id)
 		) {$wpdb->get_charset_collate()};";
 		dbDelta( $sql );
+		$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) );
+		if ( $table !== $found ) {
+			update_option( 'as_smtp2go_monitor_queue_error', __( 'The mail queue table could not be created for this site.', 'as-smtp2go-monitor' ), false );
+			return false;
+		}
 		add_option( 'as_smtp2go_monitor_state', 'armed', '', false );
+		update_option( 'as_smtp2go_monitor_schema_version', self::SCHEMA_VERSION, false );
+		return true;
 	}
 
 	/** Store all mail arguments, including file contents, before reporting acceptance. */

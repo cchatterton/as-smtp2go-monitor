@@ -63,7 +63,7 @@ namespace {
 	}
 	$wpdb = new Monitor_Test_DB();
 	$phpmailer = new \SMTP2GO\App\SMTP2GOMailer();
-	$test_options = array( 'as_smtp2go_monitor_state' => 'armed' );
+	$test_options = array( 'as_smtp2go_monitor_state' => 'armed', 'as_smtp2go_monitor_schema_version' => '1' );
 	$test_events = array();
 	$test_fail_replay = false;
 	function add_filter() {}
